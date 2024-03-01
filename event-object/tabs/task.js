@@ -19,3 +19,5 @@ function changeActiveElements() {
 for (const tbs of tabs) {
 	tbs.onclick = changeActiveElements;
 }
+
+
