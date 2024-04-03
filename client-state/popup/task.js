@@ -1,16 +1,33 @@
-let showSubscribe = function () {
-	if (document.cookie.replace(/(?:(?:^|.*;\s*)subcribeShown\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-
-		let subscribeElement = document.getElementById("subscribe-modal");
-		subscribeElement.classList.add("modal_active");
-
-		subscribeElement.querySelector(".modal__close").addEventListener("click", function (e) {
-			this.closest(".modal").classList.remove("modal_active");
-			document.cookie =
-				"subcribeShown=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-		});
-
-	}
+const subscribe = document.getElementById('subscribe-modal');
+const modalClose = subscribe.querySelector('.modal__close');
+if (modalClose) {
+  modalClose.addEventListener('click', addCookie)
 };
 
-showSubscribe();
+
+window.addEventListener('load', () => {
+  const getCokie = (name) => {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length === 2){
+      return parts
+          .pop()
+          .split(";")
+          .shift();
+    };
+  };
+  
+  const status = getCokie("subscribe");
+  if (status !== "close") {
+    subscribe.classList.add('modal_active');
+  } else {
+    subscribe.classList.remove('modal_active');
+  };
+});
+
+function addCookie() {
+  console.log(document.cookie);
+  subscribe.classList.remove('modal_active');
+  document.cookie = 'subscribe=close';
+  console.log(document.cookie);
+};
